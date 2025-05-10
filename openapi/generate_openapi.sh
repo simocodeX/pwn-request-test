@@ -1,2 +1,3 @@
-#!/bin/bash
-echo "updating openapi eheheh"
+!/bin/bash
+
+echo "update file eheh"
