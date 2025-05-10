@@ -25,6 +25,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y hub
 
+      - name: Set up Git credentials
+        run: |
+          git config --global url."https://${{ secrets.BOT_TOKEN_GITHUB }}@github.com/".insteadOf "https://github.com/"
+
+
       - name: Checkout Pull Request
         run: hub pr checkout ${{ github.event.issue.number }}
         env:
