@@ -60,11 +60,12 @@ jobs:
           chmod +x ./generate_openapi.sh
           ./generate_openapi.sh
 
-      - name: Formatting
-        uses: axel-op/googlejavaformat-action@v3
-        with:
-          args: "--replace"
-          commit-message: "Google Java format"
+    # - name: Formatting
+    #   uses: axel-op/googlejavaformat-action@v3
+    #   with:
+    #     args: "--replace"
+    #     commit-message: "Google Java format"
+
 
   notify:
     needs: [update]
