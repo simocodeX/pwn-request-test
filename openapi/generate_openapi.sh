@@ -1,1 +1,3 @@
-"#!/bin/bash\necho updating openapi" 
+#!/bin/bash
+
+echo "updating openapi"
