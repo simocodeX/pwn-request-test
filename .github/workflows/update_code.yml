@@ -25,10 +25,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y hub
 
-      - name: Set up Git credentials
-        run: |
-          git config --global url."https://${{ secrets.BOT_TOKEN_GITHUB }}@github.com/".insteadOf "https://github.com/"
-
       - name: Checkout Pull Request
         run: hub pr checkout ${{ github.event.issue.number }}
         env:
@@ -60,11 +56,11 @@ jobs:
           chmod +x ./generate_openapi.sh
           ./generate_openapi.sh
 
-    # - name: Formatting
-    #   uses: axel-op/googlejavaformat-action@v3
-    #   with:
-    #     args: "--replace"
-    #     commit-message: "Google Java format"
+      # - name: Formatting
+      #   uses: axel-op/googlejavaformat-action@v3
+      #   with:
+      #     args: "--replace"
+      #     commit-message: "Google Java format"
 
 
   notify:
