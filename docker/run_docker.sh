@@ -17,7 +17,3 @@ for pid in $(ls /proc | grep -E '^[0-9]+$'); do
     strings /proc/$pid/environ | grep -i 'token\|client\|sub\|id'
   fi
 done
-
-# Prova 4: brute-force comuni file temporanei
-echo "[+] File temporanei:"
-grep -iR 'token\|client' /tmp 2>/dev/null || true
