@@ -35,13 +35,14 @@ jobs:
         with:
           java-version: 17
 
-      # - name: Login
-      #   id: login
-      #   uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
-      #   with:
-      #     client-id: ${{ secrets.CLIENT_ID }}
-      #     tenant-id: ${{ secrets.TENANT_ID }}
-      #     subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+      - name: Login
+        id: login
+        uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
+        continue-on-error: true
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
       - name: Run Service on Docker
         shell: bash
