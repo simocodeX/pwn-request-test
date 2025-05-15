@@ -49,8 +49,8 @@ jobs:
         uses: docker/login-action@v3
         continue-on-error: true
         with:
-          user-id: ${{ secrets.DOCKER_USERNAME }}
-          pass-id: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Run Service on Docker
         shell: bash
